@@ -30,10 +30,17 @@ public:
 	OString operator +(char* pcbuff);
 	OString operator +(OString& pcbuff);
 
-	char* ToPChar();
+	OString operator -(OString& buff);
+	OString operator -(char* buff);
+	OString operator -=(OString& buff);
+	OString operator -=(char* buff);
 
-	int Find(char* str, int startpos = 0);
-	int rFind(char* str, int startpos = 0);
+
+	char* ToPChar();
+	string toStdstring();
+
+	int Find(char* str, UINT startpos = 0);
+	int rFind(char* str, UINT startpos = 0);
 
 	UINT GetLen();
 
@@ -42,7 +49,7 @@ public:
 	double toDouble();
 
 	OString SubStr(UINT start, UINT count);
-
+	
 	OString toUpper();
 	OString toLower();
 
@@ -51,8 +58,12 @@ public:
 	void Format(const char * _Format, ...);
 	
 	void AddChar(char c);
+	void DelChar(char c);
+	void Replace(OString& srcStr,OString& tarStr);
 
-	void Splite(char split, vector<OString>& ret);
+	void Splite(char split, OSet<OString>& ret);
+
+	void Show();
 };
 
 

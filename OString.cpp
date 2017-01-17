@@ -61,12 +61,12 @@ char* OString::ToPChar()
 {
 	return pdatabuff;
 }
-int OString::Find(char* str, int startpos)
+int OString::Find(char* str, UINT startpos)
 {
 	if (startpos >= mlen)
 		return -1;
 
-	for (int i = startpos; i < mlen; i++)
+	for (UINT i = startpos; i < mlen; i++)
 	{
 		if (str[0] == pdatabuff[i])
 		{
@@ -91,12 +91,12 @@ int OString::Find(char* str, int startpos)
 	}
 	return -1;
 }
-int OString::rFind(char* str, int startpos)
+int OString::rFind(char* str, UINT startpos)
 {
 	if (startpos >= mlen || startpos < 0)
 		return -1;
 
-	for (int i = startpos; i >= 0; i--)
+	for (UINT i = startpos; i >= 0; i--)
 	{
 		if (str[0] == pdatabuff[i])
 		{
@@ -235,7 +235,7 @@ OString OString::SubStr(UINT spos,UINT ncount)
 	char* tempbuff = new char[ncount+1];
 	tempbuff[ncount + 1] = 0;
 
-	for (int i = 0; i < ncount; i++)
+	for (UINT i = 0; i < ncount; i++)
 		tempbuff[i] = pdatabuff[spos + i];
 
 	ret = tempbuff;
@@ -257,7 +257,7 @@ double OString::toDouble(){
 OString OString::toUpper()
 {
 	OString ret = pdatabuff;
-	for (int i = 0; i < ret.GetLen(); i++)
+	for (UINT i = 0; i < ret.GetLen(); i++)
 	{
 		if (ret[i] >= 'a'&&ret[i] <= 'z')
 			ret[i] -= 32;
@@ -267,7 +267,7 @@ OString OString::toUpper()
 OString OString::toLower()
 {
 	OString ret = pdatabuff;
-	for (int i = 0; i < ret.GetLen(); i++)
+	for (UINT i = 0; i < ret.GetLen(); i++)
 	{
 		if (ret[i] >= 'A'&&ret[i] <= 'Z')
 			ret[i] += 32;
@@ -281,15 +281,16 @@ void OString::clear()
 		delete[] pdatabuff;
 		pdatabuff = NULL;
 	}
+	mlen = 0;
 }
-void OString::Splite(char split, vector<OString>& ret)
+void OString::Splite(char split, OSet<OString>& ret)
 {
 	OString strtempchar;
-	for (int i = 0; i < mlen; i++)
+	for (UINT i = 0; i < mlen; i++)
 	{
 		if (pdatabuff[i] == split)
 		{
-			//ret.push_back(strtempchar);
+			ret.Add(strtempchar);
 			strtempchar.clear();
 		}
 		else
@@ -297,6 +298,8 @@ void OString::Splite(char split, vector<OString>& ret)
 			strtempchar.AddChar(pdatabuff[i]);
 		}
 	}
+	if (strtempchar.GetLen() != 0)
+		ret.Add(strtempchar);
 }
 void OString::Format(const char * _Format, ...)
 {
@@ -313,8 +316,10 @@ void OString::Format(const char * _Format, ...)
 }
 void OString::AddChar(char c)
 {
+	UINT templen = mlen;
 	char* newdatabuff = new char[mlen + 2];
-	memcpy(newdatabuff, pdatabuff, mlen);
+	if (pdatabuff)
+		memcpy(newdatabuff, pdatabuff, mlen);
 	newdatabuff[mlen] = c;
 	newdatabuff[mlen+1] = 0;
 	
@@ -322,5 +327,61 @@ void OString::AddChar(char c)
 	
 	pdatabuff = newdatabuff;
 
-	mlen++;
+	mlen = templen + 1;
+}
+string OString::toStdstring()
+{
+	string strret = pdatabuff;
+	return strret;
+}
+void OString::DelChar(char c)
+{
+	char* tempbuff = new char[mlen+1];
+	for (UINT i = 0, j = 0; i < mlen; i++)
+	{
+		if (pdatabuff[i] != c)
+		{
+			tempbuff[j] = pdatabuff[i];
+			j++;
+		}
+	}
+	clear();
+	pdatabuff = tempbuff;
+}
+
+void OString::Replace(OString& str, OString& tarStr)
+{
+	OString strbuff;
+	for (UINT i = 0, j = 0; i < mlen; i++)
+	{
+		if (pdatabuff[i] == str[0])
+		{
+			bool bfind = true;
+			//OString tempbuff;
+			int k = i + 1;
+			for (int j = 1; j < str.GetLen() && k < mlen; j++, k++)
+			{
+				if (pdatabuff[k] != str[j])
+				{
+					bfind = false;
+					break;
+				}	
+			}
+			if (bfind)
+			{
+				//strbuff += tarStr;
+				i += str.GetLen() - 1;
+			}
+		}
+		else
+		{
+			strbuff.AddChar(pdatabuff[i]);
+		}
+	}
+	clear();
+	*this = strbuff;
+}
+void OString::Show()
+{
+	printf("%s", pdatabuff);
 }
