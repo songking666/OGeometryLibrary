@@ -8,7 +8,7 @@ public:
 	OPolygon(){
 
 	}
-	OPolygon(vector < OPoint<T> >& vtpt)
+	OPolygon(OSet < OPoint<T> >& vtpt)
 	{
 		m_vtpt = vtpt;
 	}
@@ -30,13 +30,13 @@ public:
 
 	}
 private:
-	vector< OPoint<T> >  m_vtpt;
-	vector< OLine<T> > m_vtline;
+	OSet< OPoint<T> >  m_vtpt;
+	OSet< OLine<T> > m_vtline;
 public:
 	void AddPT(OPoint<T>& pt){
 		m_vtpt.push_back(pt);
 	}
-	void SetPT(vector< OPoint<T> >& vtpt)
+	void SetPT(OSet< OPoint<T> >& vtpt)
 	{
 		m_vtpt = vtpt;
 	}
