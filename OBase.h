@@ -63,6 +63,7 @@ template<class T = float> class OMirtex;
 template<class T = float> class OBox;
 template<class T = int> class ONumber;
 template<class T = int> class OSet;
+template<class T = int> class ORange;
 class OString;
 
 #include "OPoint.h"
@@ -77,6 +78,7 @@ class OString;
 #include "OString.h"
 #include "ONumber.h"
 #include "OSet.h"
+#include "ORange.h"
 
 typedef OPoint<float> OPoint3f;
 typedef OPoint<double> OPoint3d;
