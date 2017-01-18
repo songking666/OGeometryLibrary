@@ -32,8 +32,8 @@ public:
 
 	OString operator -(OString& buff);
 	OString operator -(char* buff);
-	OString operator -=(OString& buff);
-	OString operator -=(char* buff);
+	void operator -=(OString& buff);
+	void operator -=(char* buff);
 
 
 	char* ToPChar();
@@ -49,20 +49,16 @@ public:
 	double toDouble();
 
 	OString SubStr(UINT start, UINT count);
-	
 	OString toUpper();
 	OString toLower();
 
 	void clear();
-
 	void Format(const char * _Format, ...);
-	
 	void AddChar(char c);
 	void DelChar(char c);
 	void Replace(OString& srcStr,OString& tarStr);
-
+	void Replace(char* srcStr, char* tarStr);
 	void Splite(char split, OSet<OString>& ret);
-
 	void Show();
 };
 

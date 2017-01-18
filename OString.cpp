@@ -221,6 +221,30 @@ char& OString::operator [](UINT pos)
 {
 	return pdatabuff[pos];
 }
+
+OString OString::operator -(OString& buff){
+	OString str;
+	OString src = *this;
+	src.Replace(buff, str);
+	return src;
+}
+OString OString::operator -(char* buff){
+	OString str;
+	OString src = *this;
+	src.Replace(buff, str.ToPChar());
+	return src;
+}
+void OString::operator -=(OString& buff){
+	OString str;
+	Replace(buff, str);
+}
+void OString::operator -=(char* buff){
+	OString str;
+	Replace(buff, str.ToPChar());
+}
+
+
+
 UINT OString::GetLen()
 {
 	return mlen;
@@ -359,7 +383,7 @@ void OString::Replace(OString& str, OString& tarStr)
 			bool bfind = true;
 			//OString tempbuff;
 			int k = i + 1;
-			for (int j = 1; j < str.GetLen() && k < mlen; j++, k++)
+			for (UINT j = 1; j < str.GetLen() && k < mlen; j++, k++)
 			{
 				if (pdatabuff[k] != str[j])
 				{
@@ -381,7 +405,16 @@ void OString::Replace(OString& str, OString& tarStr)
 	clear();
 	*this = strbuff;
 }
+
+void OString::Replace(char* srcStr, char* tarStr){
+	OString str1(srcStr);
+	OString str2(tarStr);
+
+	Replace(str1,str2);
+}
+
 void OString::Show()
 {
 	printf("%s", pdatabuff);
 }
+
