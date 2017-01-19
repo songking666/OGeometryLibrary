@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <sstream>
+#include <stdarg.h>   
 using namespace std;
 
 #define EPS (2 ^ (-52))
@@ -59,12 +60,15 @@ template<class T = float> class OPolygon;
 template<class T = float> class OTriangle;
 template<class T = float> class OVector;
 template<class T = float> class OCircle;
-template<class T = float> class OMirtex;
+template<class T = float> class OMatrix;
 template<class T = float> class OBox;
 template<class T = int> class ONumber;
 template<class T = int> class OSet;
 template<class T = int> class ORange;
+
 class OString;
+
+
 
 #include "OPoint.h"
 #include "OLine.h"
@@ -73,12 +77,13 @@ class OString;
 #include "OTriangle.h"
 #include "OCircle.h"
 #include "OPolygon.h"
-#include "OMirtex.h"
+#include "OMatrix.h"
 #include "OBox.h"
-#include "OString.h"
 #include "ONumber.h"
 #include "OSet.h"
+#include "OString.h"
 #include "ORange.h"
+
 
 typedef OPoint<float> OPoint3f;
 typedef OPoint<double> OPoint3d;
@@ -92,9 +97,10 @@ typedef OVector<float> OVectorF;
 typedef OVector<double> OVectorD;
 typedef OVector<int> OVectorI;
 
-typedef OMirtex<float> OMirtexF;
-typedef OMirtex<double> OMirtexD;
-typedef OMirtex<int> OMirtexI;
+#define OMat OMatrix;
+typedef OMatrix<float> OMatrixF;
+typedef OMatrix<double> OMatrixD;
+typedef OMatrix<int> OMatrixI;
 
 typedef ORectangle<float> ORectangleF;
 typedef ORectangle<double> ORectangleD;
@@ -117,4 +123,5 @@ typedef OSet<OPolygonD> VTPOLYD;
 typedef OSet<OPolygonI> VTPOLYI;
 
 
+#include "OPublicFunction.h"
 #endif
